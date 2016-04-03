@@ -91,9 +91,13 @@ _check = _libraries['magic'].magic_check
 _check.restype = c_int
 _check.argtypes = [magic_t, c_char_p]
 
-_list = _libraries['magic'].magic_list
-_list.restype = c_int
-_list.argtypes = [magic_t, c_char_p]
+try:
+    _list = _libraries['magic'].magic_list
+    _list.restype = c_int
+    _list.argtypes = [magic_t, c_char_p]
+except AttributeError:
+    # https://stackoverflow.com/questions/34541129/mutalyzer-py-test-fails-with-python-magic-error
+    _list = None
 
 _errno = _libraries['magic'].magic_errno
 _errno.restype = c_int
